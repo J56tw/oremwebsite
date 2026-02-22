@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="page-auth">
+  <div class="page-loader" id="page-loader" aria-hidden="true">
+    <div class="page-loader-spinner"></div>
+  </div>
   <a href="index.html" class="back-home">← 返回首頁</a>
   <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換深色/淺色模式">
     <span class="theme-icon sun" aria-hidden="true">☀️</span>
@@ -18,7 +21,8 @@
   <div class="bg-pattern"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <main class="container">
-    <div class="card">
+    <div class="card card-auth">
+      <div class="form-progress" id="form-progress" role="status" aria-live="polite"></div>
       <div class="card-header">
         <h1 class="logo">Welcome</h1>
         <p class="tagline">登入或建立帳號</p>

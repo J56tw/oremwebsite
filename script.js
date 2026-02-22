@@ -5,6 +5,7 @@
   const formRegister = document.getElementById('form-register');
   const themeToggle = document.getElementById('theme-toggle');
   const toastEl = document.getElementById('toast');
+  const formProgress = document.getElementById('form-progress');
 
   // ----- 深色 / 淺色模式 -----
   function getStoredTheme() {
@@ -23,6 +24,20 @@
   }
 
   setTheme(getStoredTheme());
+
+  var pageLoader = document.getElementById('page-loader');
+  if (pageLoader) {
+    function hideLoader() {
+      pageLoader.classList.add('done');
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(hideLoader, 80);
+    } else {
+      window.addEventListener('load', function () {
+        setTimeout(hideLoader, 80);
+      });
+    }
+  }
 
   themeToggle.addEventListener('click', function () {
     const isLight = document.body.classList.contains('theme-light');
@@ -75,6 +90,7 @@
     var btn = formLogin.querySelector('.btn-primary');
     btn.disabled = true;
     btn.textContent = '登入中…';
+    if (formProgress) formProgress.classList.add('active');
 
     fetch('/login', {
       method: 'POST',
@@ -104,6 +120,7 @@
       .finally(function () {
         btn.disabled = false;
         btn.textContent = '登入';
+        if (formProgress) formProgress.classList.remove('active');
       });
   });
 
@@ -127,6 +144,7 @@
     var btn = formRegister.querySelector('.btn-primary');
     btn.disabled = true;
     btn.textContent = '註冊中…';
+    if (formProgress) formProgress.classList.add('active');
 
     fetch('/register', {
       method: 'POST',
@@ -150,6 +168,7 @@
       .finally(function () {
         btn.disabled = false;
         btn.textContent = '建立帳號';
+        if (formProgress) formProgress.classList.remove('active');
       });
   });
 })();

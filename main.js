@@ -32,6 +32,21 @@
   }
 
   setTheme(getStoredTheme());
+
+  var pageLoader = document.getElementById('page-loader');
+  if (pageLoader) {
+    function hideLoader() {
+      pageLoader.classList.add('done');
+    }
+    if (document.readyState === 'complete') {
+      setTimeout(hideLoader, 80);
+    } else {
+      window.addEventListener('load', function () {
+        setTimeout(hideLoader, 80);
+      });
+    }
+  }
+
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {
       var isLight = document.body.classList.contains('theme-light');

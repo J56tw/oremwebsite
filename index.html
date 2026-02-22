@@ -10,14 +10,17 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="page-home">
-  <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換深色/淺色模式">
-    <span class="theme-icon sun" aria-hidden="true">☀️</span>
-    <span class="theme-icon moon" aria-hidden="true">🌙</span>
-  </button>
+  <div class="page-loader" id="page-loader" aria-hidden="true">
+    <div class="page-loader-spinner"></div>
+  </div>
 
   <header class="header">
     <nav class="nav-bar" aria-label="主選單">
       <a href="index.html" class="nav-brand">多功能集團</a>
+      <button type="button" class="theme-toggle theme-toggle-in-nav" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換深色/淺色模式">
+        <span class="theme-icon sun" aria-hidden="true">☀️</span>
+        <span class="theme-icon moon" aria-hidden="true">🌙</span>
+      </button>
       <button type="button" class="nav-toggle" id="nav-toggle" aria-label="開啟選單" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
