@@ -1,0 +1,13 @@
+{
+  "name": "login-register-site",
+  "version": "1.0.0",
+  "description": "登入/註冊網站，Node 後端",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.0"
+  }
+}

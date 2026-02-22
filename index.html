@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多功能集團</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page-home">
+  <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換深色/淺色模式">
+    <span class="theme-icon sun" aria-hidden="true">☀️</span>
+    <span class="theme-icon moon" aria-hidden="true">🌙</span>
+  </button>
+
+  <header class="header">
+    <nav class="nav-bar" aria-label="主選單">
+      <a href="index.html" class="nav-brand">多功能集團</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="開啟選單" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link">首頁</a>
+        <a href="#about" class="nav-link">關於我們</a>
+        <a href="#services" class="nav-link">服務項目</a>
+        <a href="#contact" class="nav-link">聯絡我們</a>
+        <span id="nav-auth-wrap" class="nav-auth-wrap">
+          <a href="login.html" class="nav-link nav-auth">登入 / 註冊</a>
+        </span>
+        <div id="nav-user-wrap" class="nav-user-wrap" style="display: none;">
+          <button type="button" class="user-menu-trigger" id="user-menu-trigger" aria-expanded="false" aria-haspopup="true" aria-label="帳戶選單">
+            <span class="user-avatar" id="user-avatar">
+              <img class="user-avatar-img" id="user-avatar-img" src="" alt="" style="display: none;" />
+              <svg class="user-avatar-icon" id="user-avatar-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+            </span>
+            <span class="user-name" id="user-name"></span>
+          </button>
+          <div class="user-menu-dropdown" id="user-menu-dropdown" role="menu">
+            <button type="button" class="user-menu-item" data-action="avatar" role="menuitem">修改頭像</button>
+            <button type="button" class="user-menu-item" data-action="profile" role="menuitem">修改資料</button>
+            <button type="button" class="user-menu-item" data-action="logout" role="menuitem">登出</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="bg-pattern"></div>
+  <main class="page-content">
+    <section class="hero">
+      <h1 class="hero-title">多功能集團</h1>
+      <p class="hero-desc">整合多元服務，從數位轉型到品牌策略，我們提供一站式解決方案，助您穩健成長。</p>
+    </section>
+    <section class="section" id="about">
+      <h2 class="section-title">關於我們</h2>
+      <p class="section-text">我們致力於跨產業資源整合，透過創新思維與在地經驗，為企業與個人創造長期價值。團隊涵蓋科技、行銷、顧問等領域，以彈性與效率回應各種需求。</p>
+    </section>
+    <section class="section" id="services">
+      <h2 class="section-title">服務項目</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>數位轉型</h3>
+          <p>系統建置、流程優化與數據分析，提升營運效率。</p>
+        </div>
+        <div class="service-card">
+          <h3>品牌策略</h3>
+          <p>品牌定位、視覺設計與行銷規劃，強化市場辨識度。</p>
+        </div>
+        <div class="service-card">
+          <h3>顧問諮詢</h3>
+          <p>商業模式、組織發展與風險評估，提供專業建議。</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="contact">
+      <h2 class="section-title">聯絡我們</h2>
+      <p class="section-text">歡迎來信或來電洽詢合作機會。客服信箱：contact@example.com｜服務專線：0800-000-000</p>
+    </section>
+  </main>
+
+  <input type="file" id="avatar-input" accept="image/*" class="hidden-input" aria-hidden="true" />
+
+  <div class="modal" id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title" hidden>
+    <div class="modal-backdrop" data-close="profile-modal"></div>
+    <div class="modal-card">
+      <h2 class="modal-title" id="profile-modal-title">修改資料</h2>
+      <form id="profile-form">
+        <div class="field">
+          <label for="profile-name">顯示名稱</label>
+          <input type="text" id="profile-name" name="name" required />
+        </div>
+        <button type="submit" class="btn btn-primary">儲存</button>
+        <button type="button" class="btn btn-ghost modal-cancel" data-close="profile-modal">取消</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="spotlight.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
