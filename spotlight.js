@@ -1,5 +1,5 @@
 (function () {
-  var selector = '.theme-toggle, .nav-toggle, .back-home, .nav-link, .tab, .btn, .password-toggle, .user-menu-trigger, .user-menu-item';
+  var selector = '.theme-toggle, .theme-color-toggle, .nav-toggle, .back-home, .nav-link, .tab, .btn, .password-toggle, .user-menu-trigger, .user-menu-item';
   function handleMove(e) {
     var el = e.currentTarget;
     var rect = el.getBoundingClientRect();

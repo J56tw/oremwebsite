@@ -21,6 +21,19 @@
   --font: "Outfit", sans-serif;
 }
 
+/* ===== 顏色主題（原色 / 水鴨 / 琥珀）===== */
+body.theme-color-teal {
+  --color-primary: #14b8a6;
+  --color-primary-hover: #2dd4bf;
+  --color-primary-shadow: rgba(20, 184, 166, 0.45);
+}
+
+body.theme-color-amber {
+  --color-primary: #f59e0b;
+  --color-primary-hover: #fbbf24;
+  --color-primary-shadow: rgba(245, 158, 11, 0.45);
+}
+
 /* ===== 淺色模式 ===== */
 body.theme-light {
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -185,12 +198,46 @@ body.theme-light .has-spotlight::before {
   right: 20px;
 }
 
+/* 顏色主題切換按鈕 */
+.theme-color-toggle {
+  position: fixed;
+  top: 20px;
+  right: 84px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-color-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
 @media (max-width: 768px) {
   .theme-toggle-in-nav {
     position: static;
     margin-left: auto;
     width: 44px;
     height: 44px;
+    flex-shrink: 0;
+  }
+
+  .theme-color-toggle {
+    position: static;
+    width: 36px;
+    height: 36px;
+    margin-left: 8px;
     flex-shrink: 0;
   }
 }
@@ -293,6 +340,12 @@ body.page-auth {
 body.page-home {
   padding-top: 100px;
   display: block;
+}
+
+@media (max-width: 768px) {
+  body.page-home {
+    padding-top: 120px;
+  }
 }
 
 /* ===== 主頁：浮動選單列（圓角、陰影、與頁面四周不相連）===== */
@@ -595,6 +648,35 @@ body.theme-light .user-menu-item:hover {
   color: var(--color-text);
 }
 
+/* Admin 使用者列表 */
+.admin-users-list {
+  max-height: 320px;
+  overflow: auto;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.admin-users-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-users-list th,
+.admin-users-list td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.admin-users-list th {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.admin-users-list tr:last-child td {
+  border-bottom: none;
+}
+
 /* 手機版：選單改為下拉 + 動畫 */
 @media (max-width: 768px) {
   .nav-toggle {
@@ -602,12 +684,10 @@ body.theme-light .user-menu-item:hover {
   }
 
   .nav-menu {
+    display: flex;
     flex-basis: 100%;
     flex-direction: column;
     align-items: stretch;
-    padding-top: 12px;
-    border-top: 1px solid var(--color-border);
-    margin-top: 4px;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -617,6 +697,9 @@ body.theme-light .user-menu-item:hover {
   .nav-menu.open {
     max-height: 80vh;
     opacity: 1;
+    padding-top: 12px;
+    border-top: 1px solid var(--color-border);
+    margin-top: 4px;
   }
 
   .nav-link {

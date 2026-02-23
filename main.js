@@ -1,6 +1,8 @@
 (function () {
   var USER_KEY = 'login-site-user';
+  var COLOR_KEY = 'login-site-color';
   var themeToggle = document.getElementById('theme-toggle');
+  var colorToggle = document.getElementById('theme-color-toggle');
   var navToggle = document.getElementById('nav-toggle');
   var navMenu = document.getElementById('nav-menu');
   var navAuthWrap = document.getElementById('nav-auth-wrap');
@@ -15,6 +17,8 @@
   var profileModal = document.getElementById('profile-modal');
   var profileForm = document.getElementById('profile-form');
   var profileNameInput = document.getElementById('profile-name');
+  var adminUsersModal = document.getElementById('admin-users-modal');
+  var adminUsersList = document.getElementById('admin-users-list');
 
   function getStoredTheme() {
     try {
@@ -32,6 +36,29 @@
   }
 
   setTheme(getStoredTheme());
+
+  // 顏色主題
+  function getStoredColor() {
+    try {
+      return localStorage.getItem(COLOR_KEY) || 'violet';
+    } catch (_) {
+      return 'violet';
+    }
+  }
+
+  function setColorTheme(theme) {
+    document.body.classList.remove('theme-color-teal', 'theme-color-amber');
+    if (theme === 'teal') {
+      document.body.classList.add('theme-color-teal');
+    } else if (theme === 'amber') {
+      document.body.classList.add('theme-color-amber');
+    }
+    try {
+      localStorage.setItem(COLOR_KEY, theme);
+    } catch (_) {}
+  }
+
+  setColorTheme(getStoredColor());
 
   var pageLoader = document.getElementById('page-loader');
   if (pageLoader) {
@@ -51,6 +78,16 @@
     themeToggle.addEventListener('click', function () {
       var isLight = document.body.classList.contains('theme-light');
       setTheme(isLight ? 'dark' : 'light');
+    });
+  }
+
+  if (colorToggle) {
+    colorToggle.addEventListener('click', function () {
+      var current = getStoredColor();
+      var order = ['violet', 'teal', 'amber'];
+      var idx = order.indexOf(current);
+      var next = order[(idx + 1) % order.length];
+      setColorTheme(next);
     });
   }
 
@@ -99,6 +136,12 @@
         userAvatarIcon.style.display = '';
       }
     }
+
+    // 根據是否為 admin 顯示管理項目
+    var isAdmin = !!user.isAdmin;
+    document.querySelectorAll('.user-menu-item-admin').forEach(function (el) {
+      el.style.display = isAdmin ? '' : 'none';
+    });
   }
 
   function closeUserDropdown() {
@@ -142,6 +185,38 @@
             profileModal.removeAttribute('hidden');
           }
         }
+      } else if (action === 'admin-download') {
+        var user = getUser();
+        if (!user || !user.isAdmin) return;
+        window.location.href = '/admin/users-file';
+      } else if (action === 'admin-users') {
+        var u = getUser();
+        if (!u || !u.isAdmin) return;
+        if (!adminUsersModal || !adminUsersList) return;
+        adminUsersModal.hidden = false;
+        adminUsersModal.removeAttribute('hidden');
+        adminUsersList.textContent = '載入中...';
+        fetch('/admin/users')
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (!data.ok || !Array.isArray(data.users)) {
+              adminUsersList.textContent = '載入失敗';
+              return;
+            }
+            if (!data.users.length) {
+              adminUsersList.textContent = '目前沒有使用者。';
+              return;
+            }
+            var html = '<table><thead><tr><th>名稱</th><th>Email</th><th>建立時間</th></tr></thead><tbody>';
+            data.users.forEach(function (user) {
+              html += '<tr><td>' + (user.name || '') + '</td><td>' + (user.email || '') + '</td><td>' + (user.created_at || '') + '</td></tr>';
+            });
+            html += '</tbody></table>';
+            adminUsersList.innerHTML = html;
+          })
+          .catch(function () {
+            adminUsersList.textContent = '載入失敗';
+          });
       }
     });
   });
@@ -182,6 +257,15 @@
       if (profileModal) {
         profileModal.hidden = true;
         profileModal.setAttribute('hidden', '');
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-close="admin-users-modal"]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (adminUsersModal) {
+        adminUsersModal.hidden = true;
+        adminUsersModal.setAttribute('hidden', '');
       }
     });
   });

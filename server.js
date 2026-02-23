@@ -7,6 +7,7 @@ const app = express();
 const PORT = 8000;
 const DATA_DIR = path.join(__dirname, 'data');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
+const ADMIN_EMAIL = 'j56orem@gmail.com'.toLowerCase();
 
 app.use(express.json());
 app.use(express.static(__dirname));
@@ -81,11 +82,32 @@ app.post('/login', (req, res) => {
     return res.json({ ok: false, message: '電子郵件或密碼錯誤' });
   }
 
+  const isAdmin = (user.email || '').toLowerCase() === ADMIN_EMAIL;
+
   res.json({
     ok: true,
     message: '登入成功！',
-    user: { name: user.name || '', email: user.email },
+    user: { name: user.name || '', email: user.email, isAdmin },
   });
+});
+
+// Admin：回傳所有使用者基本資料（不含密碼）
+app.get('/admin/users', (req, res) => {
+  const users = getUsers();
+  const safe = users.map(u => ({
+    name: u.name || '',
+    email: u.email || '',
+    created_at: u.created_at || '',
+  }));
+  res.json({ ok: true, users: safe });
+});
+
+// Admin：下載 users.json 檔案
+app.get('/admin/users-file', (req, res) => {
+  if (!fs.existsSync(USERS_FILE)) {
+    return res.status(404).send('users.json not found');
+  }
+  res.download(USERS_FILE, 'users.json');
 });
 
 app.listen(PORT, () => {

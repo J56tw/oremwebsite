@@ -1,11 +1,13 @@
 (function () {
   const THEME_KEY = 'login-site-theme';
+  const COLOR_KEY = 'login-site-color';
   const tabButtons = document.querySelectorAll('.card-header .tab');
   const formLogin = document.getElementById('form-login');
   const formRegister = document.getElementById('form-register');
   const themeToggle = document.getElementById('theme-toggle');
   const toastEl = document.getElementById('toast');
   const formProgress = document.getElementById('form-progress');
+  const colorToggle = document.getElementById('theme-color-toggle');
 
   // ----- 深色 / 淺色模式 -----
   function getStoredTheme() {
@@ -25,6 +27,29 @@
 
   setTheme(getStoredTheme());
 
+  // ----- 顏色主題 -----
+  function getStoredColor() {
+    try {
+      return localStorage.getItem(COLOR_KEY) || 'violet';
+    } catch (_) {
+      return 'violet';
+    }
+  }
+
+  function setColorTheme(theme) {
+    document.body.classList.remove('theme-color-teal', 'theme-color-amber');
+    if (theme === 'teal') {
+      document.body.classList.add('theme-color-teal');
+    } else if (theme === 'amber') {
+      document.body.classList.add('theme-color-amber');
+    }
+    try {
+      localStorage.setItem(COLOR_KEY, theme);
+    } catch (_) {}
+  }
+
+  setColorTheme(getStoredColor());
+
   var pageLoader = document.getElementById('page-loader');
   if (pageLoader) {
     function hideLoader() {
@@ -43,6 +68,16 @@
     const isLight = document.body.classList.contains('theme-light');
     setTheme(isLight ? 'dark' : 'light');
   });
+
+  if (colorToggle) {
+    colorToggle.addEventListener('click', function () {
+      var current = getStoredColor();
+      var order = ['violet', 'teal', 'amber'];
+      var idx = order.indexOf(current);
+      var next = order[(idx + 1) % order.length];
+      setColorTheme(next);
+    });
+  }
 
   // ----- Toast 訊息 -----
   function showToast(message, type) {
@@ -104,7 +139,7 @@
         });
       })
       .then(function (data) {
-        var user = data.user ? { name: data.user.name || '', email: data.user.email || '', avatar: null } : null;
+        var user = data.user ? { name: data.user.name || '', email: data.user.email || '', avatar: null, isAdmin: !!data.user.isAdmin } : null;
         if (user) {
           try { localStorage.setItem('login-site-user', JSON.stringify(user)); } catch (_) {}
           window.location.href = 'index.html';
