@@ -17,9 +17,12 @@
   <header class="header">
     <nav class="nav-bar" aria-label="主選單">
       <a href="index.html" class="nav-brand">多功能集團</a>
-      <button type="button" class="theme-toggle theme-toggle-in-nav" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換深色/淺色模式">
+      <button type="button" class="theme-toggle theme-toggle-in-nav" id="theme-toggle" aria-label="切換深色/淺色模式" title="切換淺色 / 深色">
         <span class="theme-icon sun" aria-hidden="true">☀️</span>
         <span class="theme-icon moon" aria-hidden="true">🌙</span>
+      </button>
+      <button type="button" class="theme-color-toggle" id="theme-color-toggle" aria-label="切換顏色主題" title="切換顏色主題">
+        🎨
       </button>
       <button type="button" class="nav-toggle" id="nav-toggle" aria-label="開啟選單" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -41,6 +44,8 @@
             <span class="user-name" id="user-name"></span>
           </button>
           <div class="user-menu-dropdown" id="user-menu-dropdown" role="menu">
+            <button type="button" class="user-menu-item user-menu-item-admin" data-action="admin-download" role="menuitem">下載 users.json</button>
+            <button type="button" class="user-menu-item user-menu-item-admin" data-action="admin-users" role="menuitem">查看所有使用者</button>
             <button type="button" class="user-menu-item" data-action="avatar" role="menuitem">修改頭像</button>
             <button type="button" class="user-menu-item" data-action="profile" role="menuitem">修改資料</button>
             <button type="button" class="user-menu-item" data-action="logout" role="menuitem">登出</button>
@@ -97,6 +102,15 @@
         <button type="submit" class="btn btn-primary">儲存</button>
         <button type="button" class="btn btn-ghost modal-cancel" data-close="profile-modal">取消</button>
       </form>
+    </div>
+  </div>
+
+  <div class="modal" id="admin-users-modal" role="dialog" aria-modal="true" aria-labelledby="admin-users-title" hidden>
+    <div class="modal-backdrop" data-close="admin-users-modal"></div>
+    <div class="modal-card">
+      <h2 class="modal-title" id="admin-users-title">所有使用者</h2>
+      <div id="admin-users-list" class="admin-users-list"></div>
+      <button type="button" class="btn btn-ghost modal-cancel" data-close="admin-users-modal">關閉</button>
     </div>
   </div>
 
